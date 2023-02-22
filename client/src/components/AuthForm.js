@@ -16,12 +16,14 @@ export default function AuthForm(props){
             <input
                 type="text"
                 value={username}
+                name="username"
                 onChange={handleChange}
                 placeholder="Username"
             />
              <input
                 type="text"
                 value={password}
+                name="password"
                 onChange={handleChange}
                 placeholder="Password"
             />
