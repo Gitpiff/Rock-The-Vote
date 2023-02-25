@@ -12,3 +12,45 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 40px;
+  background-color: #3339;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-container > form {
+  border: 1px solid #3339;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #aaa9;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.issue-form {
+  border: 1px solid #3339;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #aaa9;
+  display: flex;
+  flex-direction: column;
+}

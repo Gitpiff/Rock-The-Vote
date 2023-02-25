@@ -6,8 +6,9 @@ const initInputs = {
     imgUrl: ""
 }
 
-export default function IssueForm(){
+export default function IssueForm(props){
     const [inputs, setInputs] = useState(initInputs)
+    const { addIssue } = props
 
     function handleChange(e){
         const {name, value} = e.target
@@ -19,12 +20,14 @@ export default function IssueForm(){
 
     function handleSubmit(e){
         e.preventDefault()
+        addIssue(inputs)
+        setInputs(initInputs)
     }
 
     const { title, description, imgUrl } = inputs
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="issue-form">
             <input
             type="text"
             name="title"
@@ -40,7 +43,7 @@ export default function IssueForm(){
             onChange={handleChange}
             />
             <textarea
-            name=""
+            name="description"
             placeholder="Description"
             value={description}
             onChange={handleChange}

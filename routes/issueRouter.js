@@ -15,7 +15,7 @@ issueRouter.get("/", (req, res, next) => {
 
 // Get Issues by User Id
 issueRouter.get("/user", (req, res, next) => {
-  Issue.find({ user: req.auth._id }, (err, todos) => {
+  Issue.find({ user: req.auth._id }, (err, issues) => {
     if(err){
       res.status(500)
       return next(err)
@@ -29,8 +29,8 @@ issueRouter.post("/", (req, res, next) => {
   //add the user property to the req.auth, by doing so we can identify the user
   console.log(req.body)
   req.body.user = req.auth._id
-  const newIssue = new Todo(req.body)
-  newTodo.save((err, savedIssue) => {
+  const newIssue = new Issue(req.body)
+  newIssue.save((err, savedIssue) => {
     if(err){
       res.status(500)
       return next(err)
