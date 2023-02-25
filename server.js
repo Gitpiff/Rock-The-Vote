@@ -5,17 +5,17 @@ require("dotenv").config()
 const morgan = require("morgan")
 const mongoose = require("mongoose")
 const {expressjwt} = require("express-jwt")
-//const MongoClient = require("mongodb").MongoClient
+const MongoClient = require("mongodb").MongoClient
 
 app.use(express.json())
 app.use(morgan("dev"))
 
-mongoose.connect("mongodb://localhost:27017/Rock-The-Vote", () =>
+mongoose.connect(process.env.DB_STRING, () =>
     console.log("Connected to the DB")
 )
 
 app.use('/auth', require('./routes/authRouter'))
-app.use('/api', expressjwt({ secret: process.env.DB_STRING, algorithms: ['HS256'] }))
+app.use('/api', expressjwt({ secret: process.env.SECRET, algorithms: ['HS256'] }))
 app.use('/api/todo', require('./routes/issueRouter'))
 
 app.use((err, req, res, next) => {

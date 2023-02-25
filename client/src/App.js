@@ -11,6 +11,8 @@ function App() {
   return (
     <div className="App">
 
+      {/* //const { token } = useContext(UserContext) */}
+
       {/* //const { token, logout } = useContext(UserContext) */}
 
      <Nav />
