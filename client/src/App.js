@@ -5,6 +5,7 @@ import Nav from "./components/Navbar"
 import Auth from "./components/Auth"
 import Profile from "./components/Profile"
 import Public from "./components/Public"
+import ProtectedRoute from "./components/ProtectedRoute"
 import { UserContext } from "./context/UserProvider"
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
   return (
     <div className="App">
 
-     <Nav logout={logout}/>
+     {token && <Nav logout={logout}/>}
         <Routes>
           <Route
             path="/"
@@ -21,11 +22,17 @@ function App() {
           />
           <Route
             path="/profile"
-            element= {<Profile/>}
+            element= {<ProtectedRoute token={token} redirectTo="/">
+                        <Profile />
+                      </ProtectedRoute>
+                    }
           />
           <Route
             path="/public"
-            element= {<Public/>}
+            element= {<ProtectedRoute token={token} redirectTo="/">
+                        <Public />
+                      </ProtectedRoute>
+                    }
           />
         </Routes>
     </div>

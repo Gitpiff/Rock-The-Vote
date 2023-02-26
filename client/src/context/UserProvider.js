@@ -18,7 +18,9 @@ export default function UserProvider(props){
     const initState = {
          user: JSON.parse(localStorage.getItem("user")) || {},
          token: localStorage.getItem("token") || "",
-         issues: [] }
+         issues: [],
+         errMsg: ""
+        }
 
     const [userState, setUserState] = useState(initState)
 
@@ -35,7 +37,7 @@ export default function UserProvider(props){
                 token
             }))
         })
-        .catch(err => console.log(err.response.data.errMsg))
+        .catch(err => handleAuthErr(err.response.data.errMsg))
     }
 
     //Login
@@ -52,7 +54,7 @@ export default function UserProvider(props){
                 token
             }))
         })
-        .catch(err => console.log(err.response.data.errMsg))
+        .catch(err => handleAuthErr(err.response.data.errMsg))
     }
 
 
@@ -79,6 +81,22 @@ export default function UserProvider(props){
         .catch(err => console.log(err.response.data.errMsg))
     }
 
+    //Display Error Message to the User
+    function handleAuthErr(errMsg){
+        setUserState(prevState => ({
+            ...prevState,
+            errMsg
+        }))
+    }
+
+    //Reset Auth Error
+    function resetAuthError(){
+        setUserState(prevState => ({
+            ...prevState,
+            errMsg: ""
+        }))
+    }
+
     //Add Issue
     function addIssue(newIssue){
         userAxios.post("/api/issue", newIssue)
@@ -98,7 +116,8 @@ export default function UserProvider(props){
                 signup,
                 login,
                 logout,
-                addIssue
+                addIssue,
+                resetAuthError
             }}
         >
             {props.children}
