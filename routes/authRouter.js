@@ -27,8 +27,8 @@ authRouter.post("/signup", (req, res, next) => {
             }
             //if no errors, return a new username and a token
                     // .sign() takes a payload -in this case the new User and the SECRET
-            const token = jwt.sign(savedUser.toObject(), process.env.SECRET)
-            return res.status(201).send({token, user: savedUser})
+            const token = jwt.sign(savedUser.withoutPassword(), process.env.SECRET)
+            return res.status(201).send({token, user: savedUser.withoutPassword()})
         })
     })
 })
@@ -47,14 +47,22 @@ authRouter.post("/login", (req, res, next) => {
             res.status(403)
             return next(new Error("Username or Password are incorrect"))
         }
-        //if the password does not match
-        if(req.body.password !== user.password) {
-            res.status(403)
-            return next(new Error("Username or Password are incorrect"))
-        }
-        //if username exists and password matches create a token
-        const token = jwt.sign(user.toObject(), process.env.SECRET)
-        return res.status(200).send({token, user})
+        //check the password
+        user.checkPassword(req.body.password, (err, isMatch) => {
+            //if the password does not match
+            if(err){
+                res.status(403)
+                return next(new Error("Username or Password are incorrect"))
+            }
+            if(!isMatch){
+                res.status(403)
+                return next(new Error("Username or Password are incorrect"))
+            }
+            //if username exists and password matches create a token
+            const token = jwt.sign(user.withoutPassword(), process.env.SECRET)
+            return res.status(200).send({token, user: user.withoutPassword()})
+
+        })
     })
 })
 
