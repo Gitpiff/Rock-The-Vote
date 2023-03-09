@@ -23,6 +23,7 @@ export default function UserProvider(props){
         }
 
     const [userState, setUserState] = useState(initState)
+    const [issueList, setIssueList] = useState()
 
     //SignUp
     function signup(credentials){
@@ -109,6 +110,26 @@ export default function UserProvider(props){
         .catch(err => console.log(err.response.data.errMsg))
     }
 
+    //Add Comment
+    function addComment(issueId, newComment){
+        userAxios.put(`/api/issue/comment/${issueId}`, newComment)
+       .then(res => console.log(res.data))
+       console.log(issueId)
+        //{
+        //console.log(res.data)
+        //     const updatedIssueArray = issueList.map(issue => {
+        //         if(issue.id === issueId){
+        //             issue.comments.push(newComment)
+        //             return issue
+        //         } else {
+        //             return issue
+        //         }
+        //     })
+        //     setIssueList(updatedIssueArray)
+        // })
+       //.catch(err => console.log(err.response.data.errMsg))
+    }
+
     return (
         <UserContext.Provider
             value={{
@@ -117,11 +138,11 @@ export default function UserProvider(props){
                 login,
                 logout,
                 addIssue,
-                resetAuthError
+                resetAuthError,
+                addComment
             }}
         >
             {props.children}
         </UserContext.Provider>
     )
 }
-

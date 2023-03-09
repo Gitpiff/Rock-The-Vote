@@ -8,9 +8,11 @@ import { UserContext } from "../context/UserProvider"
 export default function Profile() {
 const {
         user:
-            { username },
-            addIssue,
-            issues
+            { username,
+              _id
+            },
+        addIssue,
+        issues
 
     } = useContext(UserContext)
 
